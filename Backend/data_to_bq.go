@@ -16,6 +16,16 @@ type tableSchema struct {
 	Mode string `json:"mode,omitempty"`
 }
 
+// Function to chunk data into smaller pieces to avoid error from BQ ingest
+func chunkData(data []recidData, chunkSize int) [][]recidData {
+	var chunks [][]recidData
+	for chunkSize < len(data) {
+		data, chunks = data[chunkSize:], append(chunks, data[0:chunkSize:chunkSize])
+	}
+	chunks = append(chunks, data)
+	return chunks
+}
+
 func writeToBQ(trainSet []recidData, testSet []recidData) error {
 	projectID := "msds434-finalproj"
 	datasetID := "recidivism"
@@ -67,9 +77,20 @@ func writeToBQ(trainSet []recidData, testSet []recidData) error {
 
 	// Insert data into train table
 	u_train := client.Dataset(datasetID).Table(trainTableID).Uploader()
-	if err := u_train.Put(ctx, trainSet); err != nil {
-		log.Fatalf("Failed to insert data into train table: %v", err)
+	// Chunk data and upload each chunk
+	chunkSize := 500 // Adjust the chunk size as needed
+	chunks := chunkData(trainSet, chunkSize)
+	for _, chunk := range chunks {
+		if err := u_train.Put(ctx, chunk); err != nil {
+			log.Fatalf("Failed to insert chunk into train table: %v", err)
+		}
 	}
+
+	fmt.Printf("Inserted %d rows\n", len(trainSet))
+
+	// if err := u_train.Put(ctx, trainSet); err != nil {
+	// 	log.Fatalf("Failed to insert data into train table: %v", err)
+	// }
 
 	log.Println("Data successfully inserted into train table")
 
