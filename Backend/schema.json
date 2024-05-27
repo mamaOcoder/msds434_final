@@ -1,0 +1,251 @@
+[
+    {
+      "name": "ID",
+      "type": "INTEGER"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "Gender",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "Race",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "AgeAtRelease",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ResidencePUMA",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "GangAffiliated",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "SupervisionRiskScoreFirst",
+      "type": "INTEGER"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "SupervisionLevelFirst",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "EducationLevel",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "Dependents",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PrisonOffense",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PrisonYears",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesFelony",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesMisd",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesViolent",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesProperty",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesDrug",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesPPViolationCharges",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesDVCharges",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorArrestEpisodesGunCharges",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesFelony",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesMisd",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesViol",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesProp",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesDrug",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesPPViolationCharges",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesDomesticViolenceCharges",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorConvictionEpisodesGunCharges",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorRevocationsParole",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PriorRevocationsProbation",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ConditionMHSA",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ConditionCogEd",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ConditionOther",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ViolationsElectronicMonitoring",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ViolationsInstruction",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ViolationsFailToReport",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ViolationsMoveWithoutPermission",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "DelinquencyReports",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ProgramAttendances",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ProgramUnexcusedAbsences",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "ResidenceChanges",
+      "type": "STRING"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "AvgDaysperDrugTest",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "DrugTestsTHCPositive",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "DrugTestsCocainePositive",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "DrugTestsMethPositive",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "DrugTestsOtherPositive",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "PercentDaysEmployed",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "JobsPerYear",
+      "type": "FLOAT64"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "EmploymentExempt",
+      "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "RecidivismWithin3years",
+      "type": "BOOLEAN"
+    }
+]
