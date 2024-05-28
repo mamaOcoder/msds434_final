@@ -247,5 +247,10 @@
       "mode": "NULLABLE",
       "name": "RecidivismWithin3years",
       "type": "BOOLEAN"
+    },
+    {
+      "mode": "NULLABLE",
+      "name": "TrainingSample",
+      "type": "STRING"
     }
 ]
