@@ -2,10 +2,8 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"time"
 
 	"cloud.google.com/go/bigquery"
@@ -34,34 +32,38 @@ func createOrCheckTable(ctx context.Context, client *bigquery.Client, datasetID,
 		// If the table doesn't exist, create it
 		if _, ok := err.(*bigquery.Error); ok {
 
-			schema := "schema.json"
-			schemaData, err := os.ReadFile(schema)
+			// schema := "schema.json"
+			// schemaData, err := os.ReadFile(schema)
+			// if err != nil {
+			// 	log.Fatalf("Failed to read schema file: %v", err)
+			// }
+
+			// var schemaFields []tableSchema
+			// if err := json.Unmarshal(schemaData, &schemaFields); err != nil {
+			// 	log.Fatalf("Failed to unmarshal schema JSON: %v", err)
+			// }
+
+			// // Convert the schema fields to BigQuery table schema
+			// var tableSchema bigquery.Schema
+			// for _, field := range schemaFields {
+			// 	fieldSchema := &bigquery.FieldSchema{
+			// 		Name: field.Name,
+			// 		Type: bigquery.FieldType(field.Type),
+			// 	}
+			// 	// Set the mode (REQUIRED, NULLABLE, REPEATED)
+			// 	if field.Mode == "REQUIRED" {
+			// 		fieldSchema.Required = true
+			// 	} else if field.Mode == "REPEATED" {
+			// 		fieldSchema.Repeated = true
+			// 	} // BigQuery FieldSchema is NULLABLE by default if mode is not set
+
+			// 	tableSchema = append(tableSchema, fieldSchema)
+			// }
+
+			tableSchema, err := bigquery.InferSchema(recidData{})
 			if err != nil {
-				log.Fatalf("Failed to read schema file: %v", err)
+				log.Fatalf("Failed to infer schema: %v", err)
 			}
-
-			var schemaFields []tableSchema
-			if err := json.Unmarshal(schemaData, &schemaFields); err != nil {
-				log.Fatalf("Failed to unmarshal schema JSON: %v", err)
-			}
-
-			// Convert the schema fields to BigQuery table schema
-			var tableSchema bigquery.Schema
-			for _, field := range schemaFields {
-				fieldSchema := &bigquery.FieldSchema{
-					Name: field.Name,
-					Type: bigquery.FieldType(field.Type),
-				}
-				// Set the mode (REQUIRED, NULLABLE, REPEATED)
-				if field.Mode == "REQUIRED" {
-					fieldSchema.Required = true
-				} else if field.Mode == "REPEATED" {
-					fieldSchema.Repeated = true
-				} // BigQuery FieldSchema is NULLABLE by default if mode is not set
-
-				tableSchema = append(tableSchema, fieldSchema)
-			}
-
 			table := client.Dataset(datasetID).Table(tableID)
 			if err := table.Create(ctx, &bigquery.TableMetadata{
 				Schema: tableSchema,
