@@ -69,7 +69,7 @@ func buildUrls(base_url string) []string {
 	// API has a limit of 1,000 rows, so need to create list of url in 1000 increment chunks
 	var query_urls []string
 	limit := 1000
-	totaldata := 25835
+	totaldata := 10000 //25835
 
 	for page, completed := 0, 0; completed < totaldata; page++ {
 		url := fmt.Sprintf("%s?$limit=%d&$offset=%d", base_url, limit, page*limit)
