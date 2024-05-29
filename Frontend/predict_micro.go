@@ -79,13 +79,13 @@ func predictQuery(recidId string) ([]PredictionResult, error) {
 
 	qtxt := fmt.Sprintf(
 		"SELECT * FROM ML.PREDICT(MODEL `recidivism.recid_xgb_model`, "+
-			"(SELECT * FROM `recidivism.test` "+
+			"(SELECT * FROM `recidivism.test_recid` "+
 			"WHERE id = %s)) ", recidId)
 
 	if recidId == "all" {
 		qtxt = fmt.Sprintf(
 			"SELECT * FROM ML.PREDICT(MODEL `recidivism.recid_xgb_model`, " +
-				"(SELECT * FROM `recidivism.test`))")
+				"(SELECT * FROM `recidivism.test_recid`))")
 	}
 
 	q := client.Query(qtxt)
