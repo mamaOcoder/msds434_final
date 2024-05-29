@@ -35,18 +35,21 @@ func getPredictionHandler(w http.ResponseWriter, r *http.Request) {
 
 	predictions, err := predictQuery(recidID)
 	if err != nil {
+		// Ensure no other output is sent before this error
 		http.Error(w, fmt.Sprintf("Error fetching prediction results: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	tmpl, err := template.ParseFiles("results.html")
 	if err != nil {
+		// Ensure no other output is sent before this error
 		http.Error(w, fmt.Sprintf("Error loading template: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	err = tmpl.Execute(w, predictions)
 	if err != nil {
+		// Ensure no other output is sent before this error
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
