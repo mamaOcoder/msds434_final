@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/bigquery"
+	"google.golang.org/api/googleapi"
 )
 
 type tableSchema struct {
@@ -31,10 +32,10 @@ func createOrCheckTable(ctx context.Context, client *bigquery.Client, datasetID,
 	// Check if the table exists
 	_, err := client.Dataset(datasetID).Table(tableID).Metadata(ctx)
 	if err != nil {
-
 		// If the table doesn't exist, create it
-		if _, ok := err.(*bigquery.Error); ok {
+		if apiErr, ok := err.(*googleapi.Error); ok && apiErr.Code == 404 {
 			fmt.Println("Table doesn't exist. Creating it.")
+
 			schema := "schema.json"
 			schemaData, err := os.ReadFile(schema)
 			if err != nil {
