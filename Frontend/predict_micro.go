@@ -118,7 +118,7 @@ func predictQuery(recidId string) ([]PredictionResult, error) {
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("Fetched row: %+v\n", row)
+		// log.Printf("Fetched row: %+v\n", row)
 		predictions = append(predictions, row)
 	}
 	log.Printf("Total predictions fetched: %d\n", len(predictions))
