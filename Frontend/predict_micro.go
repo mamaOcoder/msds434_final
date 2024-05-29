@@ -92,21 +92,21 @@ func predictQuery(recidId string) ([]PredictionResult, error) {
 
 	// Location must match that of the dataset(s) referenced in the query.
 	q.Location = "US"
-	// Run the query and print results when the query job is completed.
-	// job, err := q.Run(ctx)
-	// if err != nil {
-	// 	return err
-	// }
-	// status, err := job.Wait(ctx)
-	// if err != nil {
-	// 	return err
-	// }
-	// if err := status.Err(); err != nil {
-	// 	return err
-	// }
+	//Run the query and print results when the query job is completed.
+	job, err := q.Run(ctx)
+	if err != nil {
+		return nil, err
+	}
+	status, err := job.Wait(ctx)
+	if err != nil {
+		return nil, err
+	}
+	if err := status.Err(); err != nil {
+		return nil, err
+	}
 
 	var predictions []PredictionResult
-	it, err := q.Read(ctx)
+	it, err := job.Read(ctx)
 	for {
 		//var row []bigquery.Value
 		var row PredictionResult
