@@ -17,6 +17,11 @@
                     <li>{{ .Label }}: {{ .Prob }}</li>
                 {{ end }}
             </ul>
+            {{ if eq .PredictedRecidivismWithin3years .RecidivismWithin3years }}
+                <p>The model CORRECTLY predicted recidivism for {{ .ID }} </p>
+            {{ else }}
+                <p>The model INCORRECTLY predicted recidivism for {{ .ID }} </p>
+            {{ end }}
             <hr>
         {{ end }}
     {{ else }}
