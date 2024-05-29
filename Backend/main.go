@@ -18,9 +18,14 @@ func main() {
 	elapsedTime := time.Since(startTime)
 	fmt.Printf("Time taken to fetch records: %s\n", elapsedTime)
 
-	// Split data into train and test sets
+	// Clean data and split data into train and test sets
+	fmt.Printf("Preprocessing Data")
+	cleanedRecid, err := cleanRecid(allRecid)
+	if err != nil {
+		fmt.Printf("Error imputing missing dataset: %v\n", err)
+	}
 	fmt.Println("Splitting Data...")
-	trainSet, testSet, err := splitTrainTest(allRecid)
+	trainSet, testSet, err := splitTrainTest(cleanedRecid)
 	if err != nil {
 		fmt.Printf("Error splitting dataset: %v\n", err)
 	}

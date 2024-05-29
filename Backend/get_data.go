@@ -50,7 +50,7 @@ type recidData struct {
 	ProgramAttendances                             string `json:"program_attendances"`
 	ProgramUnexcusedAbsences                       string `json:"program_unexcusedabsences"`
 	ResidenceChanges                               string `json:"residence_changes"`
-	AvgDaysperDrugTest                             string `json:"avg_days_per_drugtest"`
+	AvgDaysPerDrugTest                             string `json:"avg_days_per_drugtest"`
 	DrugTestsTHCPositive                           string `json:"drugtests_thc_positive"`
 	DrugTestsCocainePositive                       string `json:"drugtests_cocaine_positive"`
 	DrugTestsMethPositive                          string `json:"drugtests_meth_positive"`
@@ -135,22 +135,5 @@ func getFullDataset() ([]recidData, error) {
 	fmt.Printf("Total records fetched: %d\n", len(allRecid))
 
 	return allRecid, nil
-
-}
-
-func splitTrainTest(allRecid []recidData) ([]recidData, []recidData, error) {
-
-	var trainSet, testSet []recidData
-	for _, rec := range allRecid {
-		if rec.TrainingSample == "1" {
-			trainSet = append(trainSet, rec)
-		} else {
-			testSet = append(testSet, rec)
-		}
-	}
-	fmt.Printf("Training samples: %d\n", len(trainSet))
-	fmt.Printf("Non-training samples: %d\n", len(testSet))
-
-	return trainSet, testSet, nil
 
 }
