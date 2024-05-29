@@ -13,7 +13,7 @@ func main() {
 	router := mux.NewRouter()
 
 	// route properly to respective handlers
-	//router.Handle("/", http.HandlerFunc(defaultHandler)).Methods("GET")
+	router.HandleFunc("/", rootHandler).Methods("GET")
 	// router.HandleFunc("/{id:[0-9]+}", http.HandlerFunc(getPredictionHandler)).Methods("GET")
 	// router.HandleFunc("/all", http.HandlerFunc(getPredictionHandler)).Methods("GET")
 	//router.HandleFunc("/modelmetrics", getModelMetricsHandler).Methods("GET")

@@ -6,31 +6,11 @@
     <title>Recidivism Prediction</title>
 </head>
 <body>
-    <h1>Recidivism Prediction</h1>
-    <form action="/predict" method="GET">
-        <label for="recidID">Enter ID to predict:</label>
+    <h1>Enter ID to Get Prediction</h1>
+    <form action="/predict" method="get">
+        <label for="recidID">ID:</label>
         <input type="text" id="recidID" name="recidID" required>
-        <button type="submit">Predict</button>
+        <button type="submit">Get Prediction</button>
     </form>
-
-    {{ if . }}
-    <h2>Prediction Results</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Predicted Recidivism</th>
-            <th>Probability (True)</th>
-            <th>Probability (False)</th>
-        </tr>
-        {{ range . }}
-        <tr>
-            <td>{{ .ID }}</td>
-            <td>{{ .predicted_RecidivismWithin3years }}</td>
-            <td>{{ index .predicted_RecidivismWithin3years_probs 0 "prob" }}</td>
-            <td>{{ index .predicted_RecidivismWithin3years_probs 1 "prob" }}</td>
-        </tr>
-        {{ end }}
-    </table>
-    {{ end }}
 </body>
 </html>

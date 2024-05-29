@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+</head>
+<body>
+    <h1>Prediction Results</h1>
+    {{ if . }}
+        {{ range . }}
+            <p><strong>ID:</strong> {{ .ID }}</p>
+            <p><strong>Predicted Recidivism Within 3 Years:</strong> {{ .PredictedRecidivismWithin3years }}</p>
+            <p><strong>Probabilities:</strong></p>
+            <ul>
+                {{ range .PredictedRecidivismWithin3yearsProbs }}
+                    <li>{{ .Label }}: {{ .Prob }}</li>
+                {{ end }}
+            </ul>
+            <hr>
+        {{ end }}
+    {{ else }}
+        <p>No predictions found.</p>
+    {{ end }}
+    <a href="/">Back to Input</a>
+</body>
+</html>
