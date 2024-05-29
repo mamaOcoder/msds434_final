@@ -55,24 +55,21 @@ func createOrCheckTable(ctx context.Context, client *bigquery.Client, datasetID,
 					Type: bigquery.FieldType(field.Type),
 				}
 				// Set the mode (REQUIRED, NULLABLE, REPEATED)
-				if field.Mode == "REQUIRED" {
+				switch field.Mode {
+				case "REQUIRED":
 					fieldSchema.Required = true
-				} else if field.Mode == "REPEATED" {
+				case "REPEATED":
 					fieldSchema.Repeated = true
 				} // BigQuery FieldSchema is NULLABLE by default if mode is not set
 
 				tableSchema = append(tableSchema, fieldSchema)
 			}
 
-			// tableSchema, err := bigquery.InferSchema(recidData{})
-			// if err != nil {
-			// 	log.Fatalf("Failed to infer schema: %v", err)
-			// }
 			table := client.Dataset(datasetID).Table(tableID)
 			if err := table.Create(ctx, &bigquery.TableMetadata{
 				Schema: tableSchema,
 			}); err != nil {
-				log.Fatalf("Failed to create test table: %v", err)
+				log.Fatalf("Failed to create table: %v", err)
 			}
 
 			log.Printf("Table %s:%s has been created.", datasetID, tableID)
