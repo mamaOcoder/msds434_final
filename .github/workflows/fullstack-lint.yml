@@ -1,40 +1,50 @@
-name: Fullstack-Lint
+name: Go Lint
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'Backend/**'
-      - 'Frontend/**'
   pull_request:
     branches:
       - main
-    paths:
-      - 'Backend/**'
-      - 'Frontend/**'
 
 jobs:
-  lint:
+  lint-backend:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.21'
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.21
 
-      - name: Install golangci-lint
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.26.0
+    - name: Install golangci-lint
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1  # Specify the version you need
 
-      - name: Lint Backend
-        run: |
-          golangci-lint run Backend/...
+    - name: Run golangci-lint for Backend
+      working-directory: Backend
+      run: golangci-lint run ./...
 
-      - name: Lint Frontend
-        run: |
-          golangci-lint run Frontend/...
+  lint-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.19  # Specify your Go version
+
+    - name: Install golangci-lint
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1  # Specify the version you need
+
+    - name: Run golangci-lint for Frontend
+      working-directory: Frontend
+      run: golangci-lint run ./...
