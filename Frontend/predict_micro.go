@@ -3,30 +3,77 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
-	"net/http"
-	"strings"
 
 	"cloud.google.com/go/bigquery"
-	"github.com/gorilla/mux"
 
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/api/iterator"
 )
 
-func defaultHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Serving:", r.URL.Path, "from", r.Host)
-	w.WriteHeader(http.StatusOK)
-	Body := "Enter ID to predict.\n"
-	fmt.Fprintf(w, "%s", Body)
+// Define a struct to hold the prediction results
+type PredictionResult struct {
+	predicted_RecidivismWithin3years       string
+	predicted_RecidivismWithin3years_probs []struct {
+		label string
+		prob  string
+	}
+	ID                                             string
+	Gender                                         string
+	Race                                           string
+	AgeAtRelease                                   string
+	ResidencePUMA                                  string
+	GangAffiliated                                 string
+	SupervisionRiskScoreFirst                      string
+	SupervisionLevelFirst                          string
+	EducationLevel                                 string
+	Dependents                                     string
+	PrisonOffense                                  string
+	PrisonYears                                    string
+	PriorArrestEpisodesFelony                      string
+	PriorArrestEpisodesMisd                        string
+	PriorArrestEpisodesViolent                     string
+	PriorArrestEpisodesProperty                    string
+	PriorArrestEpisodesDrug                        string
+	PriorArrestEpisodesPPViolationCharges          string
+	PriorArrestEpisodesDVCharges                   string
+	PriorArrestEpisodesGunCharges                  string
+	PriorConvictionEpisodesFelony                  string
+	PriorConvictionEpisodesMisd                    string
+	PriorConvictionEpisodesViol                    string
+	PriorConvictionEpisodesProp                    string
+	PriorConvictionEpisodesDrug                    string
+	PriorConvictionEpisodesPPViolationCharges      string
+	PriorConvictionEpisodesDomesticViolenceCharges string
+	PriorConvictionEpisodesGunCharges              string
+	PriorRevocationsParole                         string
+	PriorRevocationsProbation                      string
+	ConditionMHSA                                  string
+	ConditionCogEd                                 string
+	ConditionOther                                 string
+	ViolationsElectronicMonitoring                 string
+	ViolationsInstruction                          string
+	ViolationsFailToReport                         string
+	ViolationsMoveWithoutPermission                string
+	DelinquencyReports                             string
+	ProgramAttendances                             string
+	ProgramUnexcusedAbsences                       string
+	ResidenceChanges                               string
+	AvgDaysPerDrugTest                             string
+	DrugTestsTHCPositive                           string
+	DrugTestsCocainePositive                       string
+	DrugTestsMethPositive                          string
+	DrugTestsOtherPositive                         string
+	PercentDaysEmployed                            string
+	JobsPerYear                                    string
+	EmploymentExempt                               string
+	RecidivismWithin3years                         string
 }
 
-func predictQuery(recidId string, w http.ResponseWriter) error {
+func predictQuery(recidId string) ([]PredictionResult, error) {
 	projectID := "msds434-mod7"
 	ctx := context.Background()
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
-		return fmt.Errorf("bigquery.NewClient: %v", err)
+		return nil, fmt.Errorf("bigquery.NewClient: %v", err)
 	}
 	defer client.Close()
 
@@ -46,80 +93,31 @@ func predictQuery(recidId string, w http.ResponseWriter) error {
 	// Location must match that of the dataset(s) referenced in the query.
 	q.Location = "US"
 	// Run the query and print results when the query job is completed.
-	job, err := q.Run(ctx)
-	if err != nil {
-		return err
-	}
-	status, err := job.Wait(ctx)
-	if err != nil {
-		return err
-	}
-	if err := status.Err(); err != nil {
-		return err
-	}
-	it, err := job.Read(ctx)
+	// job, err := q.Run(ctx)
+	// if err != nil {
+	// 	return err
+	// }
+	// status, err := job.Wait(ctx)
+	// if err != nil {
+	// 	return err
+	// }
+	// if err := status.Err(); err != nil {
+	// 	return err
+	// }
+
+	var predictions []PredictionResult
+	it, err := q.Read(ctx)
 	for {
-		var row []bigquery.Value
+		//var row []bigquery.Value
+		var row PredictionResult
 		err := it.Next(&row)
 		if err == iterator.Done {
 			break
 		}
 		if err != nil {
-			return err
+			return nil, err
 		}
-		fmt.Fprintln(w, row)
+		predictions = append(predictions, row)
 	}
-	return nil
-}
-
-// Add function to print the metrics from the BigQuery ML model
-// func getModelMetricsHandler(w http.ResponseWriter, r *http.Request) {
-// 	// Here you can implement code to fetch and return the model metrics.
-
-// }
-
-// GetPredictionHandler is used to get the prediction result for a given ID
-func getPredictionHandler(w http.ResponseWriter, r *http.Request) {
-	paramStr := strings.Split(r.URL.Path, "/")
-
-	recidID := paramStr[len(paramStr)-1]
-	fmt.Fprintf(w, "Prediction results for %s:\n", recidID)
-	err := predictQuery(recidID, w)
-	if err != nil {
-		fmt.Fprintf(w, "%s", err)
-	}
-}
-
-func main() {
-	// Create new Router
-	router := mux.NewRouter()
-
-	// Serve static HTML file
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
-
-	// route properly to respective handlers
-	//router.Handle("/", http.HandlerFunc(defaultHandler)).Methods("GET")
-	router.HandleFunc("/{id:[0-9]+}", http.HandlerFunc(getPredictionHandler)).Methods("GET")
-	router.HandleFunc("/all", http.HandlerFunc(getPredictionHandler)).Methods("GET")
-	//router.HandleFunc("/modelmetrics", getModelMetricsHandler).Methods("GET")
-
-	// Create new server and assign the router
-	server := http.Server{
-		Addr:    ":8080",
-		Handler: router,
-	}
-	fmt.Println("Staring Recidivism Prediction server on Port 8080")
-
-	go func() {
-		fmt.Println("Serving metrics API")
-
-		h := http.NewServeMux()
-		h.Handle("/metrics", promhttp.Handler())
-
-		http.ListenAndServe(":9100", h)
-	}()
-
-	// Start Server on defined port/host.
-	server.ListenAndServe()
-
+	return predictions, nil
 }
