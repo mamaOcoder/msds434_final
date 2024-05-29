@@ -22,7 +22,7 @@ type PredictionResult struct {
 	AgeAtRelease                                   string
 	ResidencePUMA                                  string
 	GangAffiliated                                 string
-	SupervisionRiskScoreFirst                      string
+	SupervisionRiskScoreFirst                      int64
 	SupervisionLevelFirst                          string
 	EducationLevel                                 string
 	Dependents                                     string
@@ -57,13 +57,13 @@ type PredictionResult struct {
 	ProgramAttendances                             string
 	ProgramUnexcusedAbsences                       string
 	ResidenceChanges                               string
-	AvgDaysPerDrugTest                             string
-	DrugTestsTHCPositive                           string
-	DrugTestsCocainePositive                       string
-	DrugTestsMethPositive                          string
-	DrugTestsOtherPositive                         string
-	PercentDaysEmployed                            string
-	JobsPerYear                                    string
+	AvgDaysPerDrugTest                             float64
+	DrugTestsTHCPositive                           float64
+	DrugTestsCocainePositive                       float64
+	DrugTestsMethPositive                          float64
+	DrugTestsOtherPositive                         float64
+	PercentDaysEmployed                            float64
+	JobsPerYear                                    float64
 	EmploymentExempt                               string
 	RecidivismWithin3years                         string
 }
