@@ -30,7 +30,7 @@ jobs:
           cd Backend
           go get -u golang.org/x/lint/golint
 
-     - name: Add Go binary directory to PATH
+      - name: Add Go binary directory to PATH
         run: echo "::add-path::$(go env GOPATH)/bin"
 
       - name: Lint code
