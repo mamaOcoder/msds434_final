@@ -26,7 +26,9 @@ jobs:
           go-version: '1.21'
 
       - name: Install golint
-        run: go get -u golang.org/x/lint/golint
+        run: |
+          cd Backend
+          go get -u golang.org/x/lint/golint
 
       - name: Lint code
         run: golint ./Backend/...
