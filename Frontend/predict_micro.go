@@ -11,11 +11,11 @@ import (
 
 // Define a struct to hold the prediction results
 type PredictionResult struct {
-	predicted_RecidivismWithin3years       string
-	predicted_RecidivismWithin3years_probs []struct {
-		label string
-		prob  string
-	}
+	PredictedRecidivismWithin3years      string `json:"predicted_RecidivismWithin3years"`
+	PredictedRecidivismWithin3yearsProbs []struct {
+		Label string `json:"label"`
+		Prob  string `json:"prob"`
+	} `json:"predicted_RecidivismWithin3years_probs"`
 	ID                                             int64
 	Gender                                         string
 	Race                                           string
