@@ -44,6 +44,7 @@ func getPredictionHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Error fetching prediction results: %v", err), http.StatusInternalServerError)
 		return
 	}
+	fmt.Println(predictions)
 
 	log.Println("Loading template results.html")
 	tmpl, err := template.ParseFiles("results.html")

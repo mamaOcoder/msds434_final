@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"cloud.google.com/go/bigquery"
 
@@ -117,7 +118,9 @@ func predictQuery(recidId string) ([]PredictionResult, error) {
 		if err != nil {
 			return nil, err
 		}
+		log.Printf("Fetched row: %+v\n", row)
 		predictions = append(predictions, row)
 	}
+	log.Printf("Total predictions fetched: %d\n", len(predictions))
 	return predictions, nil
 }
