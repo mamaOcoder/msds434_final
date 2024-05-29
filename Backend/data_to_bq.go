@@ -100,7 +100,7 @@ func writeToBQ(trainSet []processedRecidData, testSet []processedRecidData) erro
 		log.Fatalf("Failed to create or check table: %v", err)
 	}
 
-	time.Sleep(5 * time.Second)
+	time.Sleep(10 * time.Second)
 
 	// Insert data into train table
 	up_train := client.Dataset(datasetID).Table(trainTableID).Uploader()
