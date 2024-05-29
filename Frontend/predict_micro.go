@@ -34,25 +34,25 @@ type PredictionResult struct {
 	PriorArrestEpisodesProperty                    string
 	PriorArrestEpisodesDrug                        string
 	PriorArrestEpisodesPPViolationCharges          string
-	PriorArrestEpisodesDVCharges                   string
-	PriorArrestEpisodesGunCharges                  string
+	PriorArrestEpisodesDVCharges                   bool
+	PriorArrestEpisodesGunCharges                  bool
 	PriorConvictionEpisodesFelony                  string
 	PriorConvictionEpisodesMisd                    string
-	PriorConvictionEpisodesViol                    string
+	PriorConvictionEpisodesViol                    bool
 	PriorConvictionEpisodesProp                    string
 	PriorConvictionEpisodesDrug                    string
-	PriorConvictionEpisodesPPViolationCharges      string
-	PriorConvictionEpisodesDomesticViolenceCharges string
-	PriorConvictionEpisodesGunCharges              string
-	PriorRevocationsParole                         string
-	PriorRevocationsProbation                      string
-	ConditionMHSA                                  string
-	ConditionCogEd                                 string
-	ConditionOther                                 string
-	ViolationsElectronicMonitoring                 string
-	ViolationsInstruction                          string
-	ViolationsFailToReport                         string
-	ViolationsMoveWithoutPermission                string
+	PriorConvictionEpisodesPPViolationCharges      bool
+	PriorConvictionEpisodesDomesticViolenceCharges bool
+	PriorConvictionEpisodesGunCharges              bool
+	PriorRevocationsParole                         bool
+	PriorRevocationsProbation                      bool
+	ConditionMHSA                                  bool
+	ConditionCogEd                                 bool
+	ConditionOther                                 bool
+	ViolationsElectronicMonitoring                 bool
+	ViolationsInstruction                          bool
+	ViolationsFailToReport                         bool
+	ViolationsMoveWithoutPermission                bool
 	DelinquencyReports                             string
 	ProgramAttendances                             string
 	ProgramUnexcusedAbsences                       string
