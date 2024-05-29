@@ -69,7 +69,7 @@ type PredictionResult struct {
 }
 
 func predictQuery(recidId string) ([]PredictionResult, error) {
-	projectID := "msds434-mod7"
+	projectID := "msds434-finalproj"
 	ctx := context.Background()
 	client, err := bigquery.NewClient(ctx, projectID)
 	if err != nil {
