@@ -3,19 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediction Results</title>
+    <title>Recidivism Prediction</title>
 </head>
 <body>
-    <h1>Prediction Results</h1>
-    <ul>
-        {{range .}}
-        <li>
-            <strong>ID:</strong> {{.ID}}<br>
-            <strong>Gender:</strong> {{.Gender}}<br>
-            <strong>Race:</strong> {{.Race}}<br>
-            <!-- Add more fields as needed -->
-        </li>
-        {{end}}
-    </ul>
+    <h1>Recidivism Prediction</h1>
+    <form action="/predict" method="GET">
+        <label for="recidID">Enter ID to predict:</label>
+        <input type="text" id="recidID" name="recidID" required>
+        <button type="submit">Predict</button>
+    </form>
+
+    {{ if . }}
+    <h2>Prediction Results</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Predicted Recidivism</th>
+            <th>Probability (True)</th>
+            <th>Probability (False)</th>
+        </tr>
+        {{ range . }}
+        <tr>
+            <td>{{ .ID }}</td>
+            <td>{{ .predicted_RecidivismWithin3years }}</td>
+            <td>{{ index .predicted_RecidivismWithin3years_probs 0 "prob" }}</td>
+            <td>{{ index .predicted_RecidivismWithin3years_probs 1 "prob" }}</td>
+        </tr>
+        {{ end }}
+    </table>
+    {{ end }}
 </body>
 </html>
