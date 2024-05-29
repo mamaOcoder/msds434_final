@@ -31,4 +31,6 @@ jobs:
           go get -u golang.org/x/lint/golint
 
       - name: Lint code
-        run: golint ./...
+        run: |
+          cd Backend
+          golint ./...
