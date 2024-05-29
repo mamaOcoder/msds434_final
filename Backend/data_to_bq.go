@@ -31,10 +31,10 @@ func createOrCheckTable(ctx context.Context, client *bigquery.Client, datasetID,
 	// Check if the table exists
 	_, err := client.Dataset(datasetID).Table(tableID).Metadata(ctx)
 	if err != nil {
-		fmt.Println("Table doesn't exist. Creating it.")
+
 		// If the table doesn't exist, create it
 		if _, ok := err.(*bigquery.Error); ok {
-
+			fmt.Println("Table doesn't exist. Creating it.")
 			schema := "schema.json"
 			schemaData, err := os.ReadFile(schema)
 			if err != nil {
@@ -101,6 +101,8 @@ func writeToBQ(trainSet []processedRecidData, testSet []processedRecidData) erro
 	if err != nil {
 		log.Fatalf("Failed to create or check table: %v", err)
 	}
+
+	time.Sleep(5 * time.Second)
 
 	// Insert data into train table
 	up_train := client.Dataset(datasetID).Table(trainTableID).Uploader()
