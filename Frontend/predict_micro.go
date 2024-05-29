@@ -16,7 +16,7 @@ type PredictionResult struct {
 		label string
 		prob  string
 	}
-	ID                                             string
+	ID                                             int64
 	Gender                                         string
 	Race                                           string
 	AgeAtRelease                                   string
