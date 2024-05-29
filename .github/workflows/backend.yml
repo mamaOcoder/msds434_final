@@ -25,13 +25,8 @@ jobs:
         with:
           go-version: '1.21'
 
-      - name: Install golint
+      - name: Lint
         run: |
           cd Backend
-          go get -u golang.org/x/lint/golint
-
-      - name: Update PATH
-        run: echo "PATH=\$PATH:$(go env GOPATH)/bin" >> $GITHUB_PATH
-
-      - name: Lint code
-        run: golint ./Backend/...
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.26.0
+          golangci-lint run 
