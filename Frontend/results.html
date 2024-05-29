@@ -10,11 +10,11 @@
     {{ if . }}
         {{ range . }}
             <p><strong>ID:</strong> {{ .ID }}</p>
-            <p><strong>Predicted Recidivism Within 3 Years:</strong> {{ .PredictedRecidivismWithin3years }}</p>
+            <p><strong>Predicted Recidivism Within 3 Years:</strong> {{ .predicted_RecidivismWithin3years }}</p>
             <p><strong>Probabilities:</strong></p>
             <ul>
-                {{ range .PredictedRecidivismWithin3yearsProbs }}
-                    <li>{{ .Label }}: {{ .Prob }}</li>
+                {{ range .predicted_RecidivismWithin3years_probs }}
+                    <li>{{ .label }}: {{ .prob }}</li>
                 {{ end }}
             </ul>
             <hr>
