@@ -12,9 +12,6 @@ func main() {
 	// Create new Router
 	router := mux.NewRouter()
 
-	// Serve static HTML file
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
-
 	// route properly to respective handlers
 	//router.Handle("/", http.HandlerFunc(defaultHandler)).Methods("GET")
 	router.HandleFunc("/{id:[0-9]+}", http.HandlerFunc(getPredictionHandler)).Methods("GET")
