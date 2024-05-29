@@ -12,7 +12,7 @@ import (
 
 // Define a struct to hold the prediction results
 type PredictionResult struct {
-	PredictedRecidivismWithin3years      string `bigquery:"predicted_RecidivismWithin3years"`
+	PredictedRecidivismWithin3years      bool `bigquery:"predicted_RecidivismWithin3years"`
 	PredictedRecidivismWithin3yearsProbs []struct {
 		Label string `bigquery:"label"`
 		Prob  string `bigquery:"prob"`
