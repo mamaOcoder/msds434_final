@@ -14,7 +14,7 @@ import (
 type PredictionResult struct {
 	PredictedRecidivismWithin3years      bool `bigquery:"predicted_RecidivismWithin3years"`
 	PredictedRecidivismWithin3yearsProbs []struct {
-		Label string `bigquery:"label"`
+		Label bool   `bigquery:"label"`
 		Prob  string `bigquery:"prob"`
 	} `bigquery:"predicted_RecidivismWithin3years_probs"`
 	ID                                             int64
