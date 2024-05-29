@@ -65,7 +65,7 @@ type PredictionResult struct {
 	PercentDaysEmployed                            float64
 	JobsPerYear                                    float64
 	EmploymentExempt                               bool
-	RecidivismWithin3years                         string
+	RecidivismWithin3years                         bool
 }
 
 func predictQuery(recidId string) ([]PredictionResult, error) {
