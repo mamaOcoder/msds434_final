@@ -12,11 +12,11 @@ import (
 
 // Define a struct to hold the prediction results
 type PredictionResult struct {
-	PredictedRecidivismWithin3years      string `json:"predicted_RecidivismWithin3years"`
+	PredictedRecidivismWithin3years      string `bigquery:"predicted_RecidivismWithin3years"`
 	PredictedRecidivismWithin3yearsProbs []struct {
-		Label string `json:"label"`
-		Prob  string `json:"prob"`
-	} `json:"predicted_RecidivismWithin3years_probs"`
+		Label string `bigquery:"label"`
+		Prob  string `bigquery:"prob"`
+	} `bigquery:"predicted_RecidivismWithin3years_probs"`
 	ID                                             int64
 	Gender                                         string
 	Race                                           string
@@ -109,8 +109,8 @@ func predictQuery(recidId string) ([]PredictionResult, error) {
 	var predictions []PredictionResult
 	it, err := job.Read(ctx)
 	for {
-		var row []bigquery.Value
-		//var row PredictionResult
+		// var row []bigquery.Value
+		var row PredictionResult
 		err := it.Next(&row)
 		if err == iterator.Done {
 			break
@@ -119,7 +119,7 @@ func predictQuery(recidId string) ([]PredictionResult, error) {
 			return nil, err
 		}
 		log.Printf("Fetched row: %+v\n", row)
-		//predictions = append(predictions, row)
+		predictions = append(predictions, row)
 	}
 	log.Printf("Total predictions fetched: %d\n", len(predictions))
 	return predictions, nil
