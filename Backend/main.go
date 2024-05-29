@@ -30,7 +30,6 @@ func main() {
 		fmt.Printf("Error splitting dataset: %v\n", err)
 	}
 
-	fmt.Println("Test GA")
 	// Write data to GCP BigQuery
 	err = writeToBQ(trainSet, testSet)
 }
