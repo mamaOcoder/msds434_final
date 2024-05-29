@@ -64,7 +64,7 @@ type PredictionResult struct {
 	DrugTestsOtherPositive                         float64
 	PercentDaysEmployed                            float64
 	JobsPerYear                                    float64
-	EmploymentExempt                               string
+	EmploymentExempt                               bool
 	RecidivismWithin3years                         string
 }
 
