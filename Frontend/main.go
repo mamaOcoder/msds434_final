@@ -39,4 +39,6 @@ func main() {
 	// Start Server on defined port/host.
 	server.ListenAndServe()
 
+	fmt.Println("test frontend lint")
+
 }
