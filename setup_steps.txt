@@ -47,4 +47,4 @@ Final Project Steps:
 10. View application/Prometheus/Grafana using external ip address for the GCE VM
     - :8080 to use the application
     - :9090 to view Prometheus web UI 
-    - :3000 to view Graphana dashboards
+    - :3000 to view Grafana dashboards
