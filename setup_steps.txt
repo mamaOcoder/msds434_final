@@ -1,0 +1,50 @@
+Final Project Steps:
+
+1. Set up a GCP project.
+	- Enable BigQuery
+	- Enable Compute Engine VM
+		- set up IAM and firewall rules
+
+2. BigQuery:
+	- Manually set up “recidivism” database in the GCP console
+
+3. Compute Engine
+	- Created VM for backend making sure to select “Allow full access to all Cloud APIs”
+
+4. Connect to newly created VM and install necessary packages
+    gcloud compute ssh final-backend --zone us-east1-b
+    sudo apt update
+    sudo apt install git
+    sudo apt install -t bookworm-backports golang-go
+    git clone https://github.com/mamaOcoder/msds434_final.git 
+    sudo apt install docker.io
+
+5. Build the docker image, run the container and connect it to “app_network” (needed for connecting to monitoring)
+    sudo docker build -t recid_prediction_app .
+	sudo docker network create app_network
+	sudo docker run -d  --name recid_prediction_app_container  --network app_network -p 8080:8080 -p 9100:9100 recid_prediction_app
+
+6. Pull Prometheus docker image, create monitoring network and create volume 
+	sudo docker pull prom/prometheus
+	sudo docker network create monitoring
+	sudo docker volume create prometheus-data
+
+7. Create prometheus container on the monitoring network
+	sudo docker run --name prometheus \
+  	--network monitoring \
+  	-v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml \
+  	-v prometheus-data:/prometheus \
+  	-p 9090:9090 -d prom/prometheus
+
+8. Connect prometheus to my application’s network
+    sudo docker network connect app_network prometheus
+
+9. Pull Grafana docker image, create volume to store data and run container
+    sudo docker pull grafana/grafana
+	sudo docker volume create grafana-data
+	sudo docker run -v grafana-data -p 3000:3000 --name grafana --network monitoring grafana/grafana
+
+10. View application/Prometheus/Grafana using external ip address for the GCE VM
+    - :8080 to use the application
+    - :9090 to view Prometheus web UI 
+    - :3000 to view Graphana dashboards
